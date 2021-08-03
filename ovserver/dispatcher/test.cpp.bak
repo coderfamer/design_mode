@@ -1,0 +1,36 @@
+#include <iostream>
+#include <vector>
+
+class a
+{
+public:
+    virtual void print() { std::cout << "I`m your father" << std::endl; }
+};
+
+class b : public a
+{
+public:
+    void print() { std::cout << "yes!!!" << std::endl; }
+};
+
+class c : public a
+{
+public:
+    void print() { std::cout << "c" << std::endl; }
+};
+
+
+int main()
+{
+    std::vector<a *> vec;
+    b * a_ = new b();
+    c * c_ = new c();
+    vec.push_back(a_);
+    vec.push_back(c_);
+
+    for (auto & v : vec) {
+        v->print();
+    }
+
+    return 0;
+}
