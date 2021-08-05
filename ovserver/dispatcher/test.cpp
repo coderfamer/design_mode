@@ -1,4 +1,4 @@
-#include "server.h"
+#include "observer.h"
 
 #include <iostream>
 #include <functional>
@@ -6,6 +6,10 @@
 
 class Wxa : public Subject
 {
+public:
+    ~Wxa() {
+        std::cout << "bye!! Wxa" << std::endl;
+    }
 public:
     void Processwxa(const unsigned char *, int) { cnt_++;std::cout << std::to_string(cnt_) + ",Process wxa!!!" << std::endl;}
 
@@ -20,6 +24,10 @@ private:
 class Wxf : public Subject 
 {
 public:
+    ~Wxf() {
+        std::cout << "bye!! Wxf" << std::endl;
+    }
+public:
     void ProcessWxf(const unsigned char *, int) { cnt_++;std::cout << std::to_string(cnt_) + ",Process wxf!!" << std::endl;}
 
 private:
@@ -27,9 +35,18 @@ private:
 };
 
 
+class Server : public ObServer
+{
+public:
+    void hello();
+};
+
+
 int main()
 {
     Server server;
+    const unsigned char * data = (const unsigned char *)"dajiahao";
+    int len = 20;
 
     std::shared_ptr<Wxa> wxa(new Wxa);
     std::shared_ptr<Wxf> wxf(new Wxf);
@@ -42,7 +59,7 @@ int main()
 
     // server.Notify();
     for (auto &v : vec) {
-        server.Notify(v);
+        server.Notify(v, data, len);
     }
     
     return 0;
